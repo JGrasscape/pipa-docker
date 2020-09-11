@@ -2,6 +2,8 @@ const express = require("express");
 const body_parser = require("body-parser");
 const gnuplot = require("gnuplot");
 
+const {Base64Encode} = require("base64-stream");
+
 // Alusta express-sovellus
 const app = express();
 
@@ -15,6 +17,7 @@ app.use(body_parser.urlencoded({
 // Käsittelijä POST-kutsulle, jossa JSON-muotoinen data
 app.post("/", (req, res, next) => {
     const formula = req.body.formula;
+    console.log(formula);
 
     // Plottaa png-kuva
     gnuplot()
@@ -22,10 +25,7 @@ app.post("/", (req, res, next) => {
         .unset("output")
         .plot(formula, {end: true})
         .pipe(res);
-
-    console.log(formula);
-    res.send("ok");
 });
 
 // Kuuntele porttia 80
-app.listen(8080);
+app.listen(80);
