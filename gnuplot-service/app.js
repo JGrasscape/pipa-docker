@@ -24,6 +24,7 @@ app.post("/", (req, res, next) => {
         .set("term png")
         .unset("output")
         .plot(formula, {end: true})
+        .pipe(new Base64Encode())
         .pipe(res);
 });
 
